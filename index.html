@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div id="app"></div>
+<script src="https://unpkg.com/oboe@2.1.3"></script>
+<script src="https://unpkg.com/jquery"></script>
+<script>
+    const container = $('#app');
+
+    function onReceive(key) {
+        return data => {
+            if (!data.ok) {
+                return;
+            }
+            container.append(`<p>${key}</p><ul>${data.data.map(item => `<li>${item.vod_name}</li>`).join('')}</ul>`);
+        }
+    }
+
+    oboe('/data')
+        .node('data.okzy', onReceive('okzy'))
+        .node('data.1156zy', onReceive('1156zy'))
+        .node('data.zdziyuan', onReceive('zdziyuan'))
+        .node('data.yongjiuzyw', onReceive('yongjiuzyw'))
+        .node('data.1886zy', onReceive('1886zy'));
+</script>
+</body>
+</html>
